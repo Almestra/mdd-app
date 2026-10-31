@@ -13,6 +13,8 @@ html {
   );
   @include mat.theme-overrides(
     (
+      primary: #7451eb,
+      label-large-weight: 600,
       surface: white,
     )
   );

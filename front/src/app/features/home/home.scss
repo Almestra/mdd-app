@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  min-height: 100dvh;
+}
+
+.logo {
+  width: min(412px, 75vw);
+  height: auto;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 10rem;
+  gap: 1.25rem;
+
+  a:hover,
+  a:focus-visible {
+    @include mat.button-overrides(
+      (
+        outlined-label-text-color: var(--mat-sys-primary),
+        outlined-outline-color: var(--mat-sys-primary),
+      )
+    );
+  }
+
+  @include mat.button-overrides(
+    (
+      outlined-container-shape: 8px,
+      outlined-label-text-color: var(--mat-sys-on-surface),
+      outlined-outline-color: var(--mat-sys-on-surface),
+    )
+  );
+
+  @media (min-width: 600px) {
+    grid-template-columns: 10rem 10rem;
+    gap: 4rem;
+  }
+}
