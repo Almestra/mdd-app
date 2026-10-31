@@ -82,7 +82,7 @@ Pour chaque choix structurant : type, documentation, objectif, justification et,
 - **Angular Material** (bibliothèque de composants, [documentation](https://material.angular.dev))
   - **Objectif** : disposer de composants prêts à l’emploi, accessibles et personnalisables selon les maquettes.
   - **Justification** : déjà dans le projet de départ ; maintenue par l’équipe d’Angular, au même rythme de versions.
-  - **Alternative écartée** : tout coder en CSS, en rendant soi-même chaque composant accessible.
+  - **Alternative écartée** : Tailwind CSS, qui colle vite aux maquettes, mais laisse à écrire le comportement et l’accessibilité des composants (liste déroulante, panneau latéral, fenêtre de confirmation).
 
 #### Back-end
 
