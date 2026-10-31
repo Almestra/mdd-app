@@ -263,6 +263,8 @@ Les tests de chaque fonctionnalité sont écrits avant son code (TDD) et suivent
 
 La couverture est contrôlée à 80 % des lignes et des branches, avec [JaCoCo](https://www.jacoco.org/jacoco/) pour le back-end et Vitest pour le front-end : en dessous de ce seuil, `./mvnw verify` et `npm run test:coverage` échouent. Sont exclus `MddApiApplication`, qui ne fait que démarrer l’application, et le code généré par Lombok.
 
+Une intégration continue ([GitHub Actions](https://docs.github.com/actions)) relance sous Linux, à chaque pull request, les tests, les seuils de couverture, la mise en forme et le lint. Seuls les tests Cypress, qui demandent la vraie API, se lancent à la main.
+
 *Résultats à compléter au fil du développement.*
 
 <!-- Description des tests mis en place : unitaires, d’intégration, end-to-end, frameworks utilisés, taux de couverture. Tableau : type de test, outil / framework, portée, résultats. -->
