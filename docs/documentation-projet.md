@@ -253,7 +253,17 @@ Content-Type: application/problem+json
 
 ### 3.1 Stratégie de test
 
-*À compléter au fil du développement.*
+Les tests de chaque fonctionnalité sont écrits avant son code (TDD) et suivent le schéma Arrange-Act-Assert. Ils vérifient ce que l’utilisateur attend, à travers l’API ou l’interface, plutôt que le détail du code.
+
+- **Unitaires, back-end** : [JUnit](https://junit.org) et [Mockito](https://site.mockito.org). Portée : les règles des services, isolées de la base de données.
+- **Intégration, back-end** : Spring Boot Test et [Testcontainers](https://testcontainers.com). Portée : chaque endpoint, de la requête à un vrai MySQL 9.7 lancé dans un conteneur, migrations Flyway comprises. Ces tests vérifient aussi les règles portées par la base, comme l’unicité et la suppression en cascade. Une base en mémoire comme H2 serait plus rapide, mais ne se comporte pas exactement comme MySQL.
+- **Unitaires, front-end** : [Vitest](https://vitest.dev), proposé par défaut par Angular 22. Portée : un composant ou un service pris seul.
+- **Intégration, front-end** : Vitest. Portée : une page dans la vraie application, avec ses routes, ses protections, ses intercepteurs et ses services ; seules les réponses de l’API sont simulées.
+- **De bout en bout** : [Cypress](https://docs.cypress.io). Portée : les parcours complets de l’utilisateur dans le navigateur, sur la vraie API.
+
+La couverture est contrôlée à 80 % des lignes et des branches, avec [JaCoCo](https://www.jacoco.org/jacoco/) pour le back-end et Vitest pour le front-end : en dessous de ce seuil, `./mvnw verify` et `npm run test:coverage` échouent. Sont exclus `MddApiApplication`, qui ne fait que démarrer l’application, et le code généré par Lombok.
+
+*Résultats à compléter au fil du développement.*
 
 <!-- Description des tests mis en place : unitaires, d’intégration, end-to-end, frameworks utilisés, taux de couverture. Tableau : type de test, outil / framework, portée, résultats. -->
 

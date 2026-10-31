@@ -1,25 +1,44 @@
-# P6-Full-Stack-reseau-dev
+# MDD
 
-## Front
+MDD (Monde de Dév) is a social network for developers, built as an MVP for ORION. Users subscribe to programming topics, follow a feed, publish posts and comment on them. The user interface is in French.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+The project documentation is in [docs/documentation-projet.md](docs/documentation-projet.md) (in French).
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Prerequisites
 
-### Development server
+- Java 25
+- Node.js 26
+- Docker
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Back-end
 
-### Build
+From the `back` folder, copy `.env.example` to `.env`, then fill in `MYSQL_PASSWORD` and `MYSQL_ROOT_PASSWORD`. Docker creates the database with these values on its first start.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Start the API on `http://localhost:8080`. This also starts MySQL and applies the database migrations:
 
-### Where to start
+```bash
+./mvnw spring-boot:run
+```
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+On Windows, use `./mvnw.cmd` instead of `./mvnw`.
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+Other commands:
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
+- `./mvnw verify`: runs the tests and checks the 80% coverage gate. The report is in `target/site/jacoco/index.html`.
+- `./mvnw spotless:apply`: formats the Java code.
 
-Good luck!
+## Front-end
+
+From the `front` folder, install the dependencies and start the application on `http://localhost:4200`:
+
+```bash
+npm ci
+npm start
+```
+
+Other commands:
+
+- `npm run test:coverage`: runs the unit and integration tests and checks the 80% coverage gate. The report is in `coverage/mdd-front/index.html`.
+- `npm run e2e:ci`: runs the Cypress tests in a headless browser.
+- `npm run lint`: checks the code with ESLint.
+- `npm run format`: formats the code with Prettier.
