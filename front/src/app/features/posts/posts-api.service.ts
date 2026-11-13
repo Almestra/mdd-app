@@ -17,4 +17,11 @@ export class PostsApi {
   feed(direction: FeedDirection): Observable<Post[]> {
     return this.http.get<Post[]>('/api/feed', { params: { direction } });
   }
+
+  /**
+   * Reads a post.
+   */
+  get(id: number): Observable<Post> {
+    return this.http.get<Post>(`/api/posts/${id}`);
+  }
 }

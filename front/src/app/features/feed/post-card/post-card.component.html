@@ -1,4 +1,6 @@
-<h2 class="title">{{ post().title }}</h2>
+<h2 class="title">
+  <a [routerLink]="['/posts', post().id]">{{ post().title }}</a>
+</h2>
 <p class="meta">
   <time [attr.datetime]="post().createdAt">{{ post().createdAt | date: 'dd/MM/yyyy' }}</time>
   <span>{{ post().author }}</span>

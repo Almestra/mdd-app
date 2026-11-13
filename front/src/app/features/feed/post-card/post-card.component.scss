@@ -1,5 +1,6 @@
 // The card of the mockup, like the topic cards
 :host {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -12,6 +13,36 @@
   margin: 0;
   font-size: 16px;
   font-weight: 700;
+}
+
+// The link of the title stretches over the whole card: a click anywhere opens the post, while
+// screen readers announce the title only
+.title a {
+  color: inherit;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+  }
+
+  // Violet on hover and on keyboard focus, like the links of the header
+  &:hover,
+  &:focus-visible {
+    color: var(--mat-sys-primary);
+  }
+
+  // The keyboard focus outlines the whole card
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::after {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
 }
 
 // The date and the author side by side, each in one half of the card. Like the content, they keep

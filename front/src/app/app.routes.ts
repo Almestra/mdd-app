@@ -35,6 +35,13 @@ export const routes: Routes = [
         loadComponent: () => import('./features/feed/feed.component').then((m) => m.Feed),
       },
       {
+        // The page shows the title of the post in the tab once it has loaded
+        path: 'posts/:id',
+        title: 'Article – MDD',
+        loadComponent: () =>
+          import('./features/posts/post-detail/post-detail.component').then((m) => m.PostDetail),
+      },
+      {
         path: 'topics',
         title: 'Thèmes – MDD',
         loadComponent: () => import('./features/topics/topics.component').then((m) => m.Topics),
