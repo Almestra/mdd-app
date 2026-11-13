@@ -99,4 +99,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, problem, headers, status, request);
     }
 
+    /**
+     * Answers 404 when the requested post does not exist.
+     *
+     * @return the Problem Details
+     */
+    @ExceptionHandler(PostNotFoundException.class)
+    public ProblemDetail handlePostNotFound() {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, "Cet article n’existe pas.");
+    }
+
 }
