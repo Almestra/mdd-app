@@ -1,6 +1,7 @@
 package com.orion.mdd.user;
 
 import com.orion.mdd.common.security.AuthCookieService;
+import com.orion.mdd.common.security.CurrentUserId;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,16 +10,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
 
 /**
  * Exposes the profile of the logged-in user.
@@ -39,8 +36,8 @@ public class UserController {
      * Returns the logged-in user. The front-end calls it when it starts, since it cannot read the
      * HttpOnly cookie that holds the token.
      *
-     * @param jwt
-     *            the verified token
+     * @param userId
+     *            the logged-in user
      * @return the profile
      */
     @GetMapping("/me")
@@ -50,15 +47,15 @@ public class UserController {
     @ApiResponse(responseCode = "401", description = "Not logged in, or the account no longer exists",
             content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
                     schema = @Schema(implementation = ProblemDetail.class)))
-    public UserResponse me(@AuthenticationPrincipal Jwt jwt) {
-        return UserResponse.from(userService.getCurrentUser(userId(jwt)));
+    public UserResponse me(@CurrentUserId Long userId) {
+        return UserResponse.from(userService.getCurrentUser(userId));
     }
 
     /**
      * Changes the profile of the logged-in user. The token stays valid, since it names the account by its id.
      *
-     * @param jwt
-     *            the verified token
+     * @param userId
+     *            the logged-in user
      * @param request
      *            the new username and e-mail address
      * @return the updated profile
@@ -76,15 +73,15 @@ public class UserController {
     @ApiResponse(responseCode = "409", description = "Username or e-mail already taken by another user",
             content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
                     schema = @Schema(implementation = ProblemDetail.class)))
-    public UserResponse updateMe(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody ProfileRequest request) {
-        return UserResponse.from(userService.updateProfile(userId(jwt), request));
+    public UserResponse updateMe(@CurrentUserId Long userId, @Valid @RequestBody ProfileRequest request) {
+        return UserResponse.from(userService.updateProfile(userId, request));
     }
 
     /**
      * Changes the password of the logged-in user, who must give the current one.
      *
-     * @param jwt
-     *            the verified token
+     * @param userId
+     *            the logged-in user
      * @param request
      *            the current password and the new one
      * @return an empty response
@@ -97,17 +94,17 @@ public class UserController {
     @ApiResponse(responseCode = "401", description = "Not logged in, or the account no longer exists",
             content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
                     schema = @Schema(implementation = ProblemDetail.class)))
-    public ResponseEntity<Void> changeMyPassword(@AuthenticationPrincipal Jwt jwt,
+    public ResponseEntity<Void> changeMyPassword(@CurrentUserId Long userId,
             @Valid @RequestBody PasswordChangeRequest request) {
-        userService.changePassword(userId(jwt), request);
+        userService.changePassword(userId, request);
         return ResponseEntity.noContent().build();
     }
 
     /**
      * Deletes the account of the logged-in user, with its data, and logs them out.
      *
-     * @param jwt
-     *            the verified token
+     * @param userId
+     *            the logged-in user
      * @return an empty response with the cookie that deletes the token cookie
      */
     @DeleteMapping("/me")
@@ -115,15 +112,11 @@ public class UserController {
     @ApiResponse(responseCode = "401", description = "Not logged in",
             content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
                     schema = @Schema(implementation = ProblemDetail.class)))
-    public ResponseEntity<Void> deleteMe(@AuthenticationPrincipal Jwt jwt) {
-        userService.deleteAccount(userId(jwt));
+    public ResponseEntity<Void> deleteMe(@CurrentUserId Long userId) {
+        userService.deleteAccount(userId);
         return ResponseEntity.noContent()
                 .header(HttpHeaders.SET_COOKIE, authCookieService.clear().toString())
                 .build();
-    }
-
-    private static Long userId(Jwt jwt) {
-        return Long.valueOf(Objects.requireNonNull(jwt.getSubject()));
     }
 
 }
