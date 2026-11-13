@@ -27,6 +27,9 @@ describe('Register page', () => {
     submit(page);
     const request = http.expectOne('/api/auth/register');
     request.flush(user, { status: 201, statusText: 'Created' });
+    // The feed opens and asks for its posts
+    const feed = await vi.waitFor(() => http.expectOne('/api/feed?direction=desc'));
+    feed.flush([]);
     await fixture.whenStable();
 
     // Assert
