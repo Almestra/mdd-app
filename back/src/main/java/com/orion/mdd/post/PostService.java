@@ -6,11 +6,14 @@ import com.orion.mdd.common.exception.UserNotFoundException;
 import com.orion.mdd.topic.Topic;
 import com.orion.mdd.user.User;
 import com.orion.mdd.user.UserService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
- * Creates the posts and gives access to them.
+ * Creates the posts, gives access to them and builds the feed of each user.
  */
 @Service
 public class PostService {
@@ -59,6 +62,23 @@ public class PostService {
     public PostResponse getPost(Long id) {
         return postRepository.findWithAuthorAndTopicById(id).map(PostResponse::from)
                 .orElseThrow(PostNotFoundException::new);
+    }
+
+    /**
+     * Returns the feed of a user: the posts of the topics they follow, sorted by date. The posts created in the same
+     * second keep the order in which they were created.
+     *
+     * @param userId
+     *            the identifier carried by the token
+     * @param direction
+     *            descending for the newest first, ascending for the oldest first
+     * @return the posts of the feed
+     */
+    @Transactional(readOnly = true)
+    public List<PostResponse> getFeed(Long userId, Sort.Direction direction) {
+        return postRepository.findFeed(userId, Sort.by(direction, "createdAt", "id")).stream()
+                .map(PostResponse::from)
+                .toList();
     }
 
 }
