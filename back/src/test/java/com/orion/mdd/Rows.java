@@ -39,4 +39,27 @@ public final class Rows {
                 .longValue();
     }
 
+    /**
+     * Writes a comment.
+     *
+     * @param jdbcTemplate
+     *            the access to the test database
+     * @param authorId
+     *            the author
+     * @param postId
+     *            the commented post
+     * @param content
+     *            the text
+     * @param createdAt
+     *            the date, in UTC
+     * @return the identifier of the new comment
+     */
+    public static Long insertComment(JdbcTemplate jdbcTemplate, Long authorId, Long postId, String content,
+            String createdAt) {
+        return new SimpleJdbcInsert(jdbcTemplate).withTableName("comments").usingGeneratedKeyColumns("id")
+                .executeAndReturnKey(Map.of("content", content, "created_at", createdAt, "author_id", authorId,
+                        "post_id", postId))
+                .longValue();
+    }
+
 }

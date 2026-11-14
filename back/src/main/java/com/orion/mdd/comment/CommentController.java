@@ -1,6 +1,7 @@
 package com.orion.mdd.comment;
 
 import com.orion.mdd.common.security.CurrentUserId;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,14 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
- * Lets the logged-in users comment the posts.
+ * Lets the logged-in users comment the posts and read their comments.
  */
 @RestController
 @RequestMapping("/api/posts/{postId}/comments")
@@ -55,6 +59,27 @@ public class CommentController {
     public ResponseEntity<CommentResponse> create(@CurrentUserId Long userId, @PathVariable Long postId,
             @Valid @RequestBody CommentRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createComment(userId, postId, request));
+    }
+
+    /**
+     * Lists the comments of a post, oldest first, whoever wrote them.
+     *
+     * @param postId
+     *            the post's identifier
+     * @return the comments
+     */
+    @GetMapping
+    @ApiResponse(responseCode = "200", description = "The comments of the post, oldest first",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    array = @ArraySchema(schema = @Schema(implementation = CommentResponse.class))))
+    @ApiResponse(responseCode = "401", description = "Not logged in",
+            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
+                    schema = @Schema(implementation = ProblemDetail.class)))
+    @ApiResponse(responseCode = "404", description = "Post not found",
+            content = @Content(mediaType = MediaType.APPLICATION_PROBLEM_JSON_VALUE,
+                    schema = @Schema(implementation = ProblemDetail.class)))
+    public List<CommentResponse> list(@PathVariable Long postId) {
+        return commentService.listComments(postId);
     }
 
 }
