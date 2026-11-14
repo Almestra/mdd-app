@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -83,6 +84,17 @@ public class User {
      */
     public boolean isSubscribedTo(Topic topic) {
         return subscriptions.contains(topic);
+    }
+
+    /**
+     * Finds a topic among those the user follows.
+     *
+     * @param topicId
+     *            the topic's identifier
+     * @return the topic, or nothing if the user does not follow it or if it does not exist
+     */
+    public Optional<Topic> findSubscription(Long topicId) {
+        return subscriptions.stream().filter(topic -> topic.getId().equals(topicId)).findFirst();
     }
 
     /**

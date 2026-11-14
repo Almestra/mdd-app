@@ -1,0 +1,74 @@
+// The icon button of Material, and the space between it and the title
+$arrow-size: 40px;
+$arrow-gap: 8px;
+// About 75 characters per line at 20px, the most for comfortable reading
+$measure: 760px;
+
+:host {
+  display: block;
+  padding: 1.5rem 1rem;
+
+  @media (min-width: 600px) {
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+// One column, centered on the page
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: $arrow-size + $arrow-gap + $measure;
+  margin: 0 auto;
+}
+
+// The back arrow on the left of the title, centered on its first line, 32px high: the button
+// overflows that line by 4px above and below, without pushing the text further down
+.heading {
+  display: flex;
+  align-items: flex-start;
+  gap: $arrow-gap;
+}
+
+.back {
+  flex: none;
+  margin-block: -4px;
+}
+
+.title {
+  margin: 0;
+  font: var(--mat-sys-headline-small);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.failure {
+  align-self: center;
+  margin: 0;
+  color: var(--mat-sys-error);
+}
+
+// The text of the mockup, 20px regular. On a larger screen, it lines up with the title
+.meta,
+.content {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+
+  @media (min-width: 600px) {
+    margin-left: $arrow-size + $arrow-gap;
+  }
+}
+
+// The date, the author and the topic on one line, as long as it is wide enough
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+}
+
+// The line breaks of the author are kept
+.content {
+  white-space: pre-line;
+}

@@ -27,7 +27,7 @@ Les thèmes sont des données de référence, insérées par une migration Flywa
 - **`content`** : `TEXT`. Saisi par l’utilisateur : du texte brut (ni HTML ni Markdown), de 10 000 caractères au plus.
 - **`created_at`** : `DATETIME`, en UTC, renseignée par le back-end à la création de l’article.
 - **`author_id`** : `BIGINT`, clé étrangère vers `users`, renseignée par le back-end : c’est l’utilisateur connecté.
-- **`topic_id`** : `BIGINT`, clé étrangère vers `topics` : le thème choisi par l’utilisateur dans la liste.
+- **`topic_id`** : `BIGINT`, clé étrangère vers `topics` : le thème choisi par l’utilisateur, parmi ceux auxquels il est abonné.
 
 ### Commentaires (`comments`)
 

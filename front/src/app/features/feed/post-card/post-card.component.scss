@@ -1,0 +1,64 @@
+// The card of the mockup, like the topic cards
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+// The link of the title stretches over the whole card: a click anywhere opens the post, while
+// screen readers announce the title only
+.title a {
+  color: inherit;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+  }
+
+  // Violet on hover and on keyboard focus, like the links of the header
+  &:hover,
+  &:focus-visible {
+    color: var(--mat-sys-primary);
+  }
+
+  // The keyboard focus outlines the whole card
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::after {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+// The date and the author side by side, each in one half of the card. Like the content, they keep
+// the body text of the theme, 14px regular. A long username wraps instead of overflowing
+.meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+// Five lines at most, then an ellipsis
+.content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  margin: 0;
+}

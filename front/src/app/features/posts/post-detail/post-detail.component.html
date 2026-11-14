@@ -1,0 +1,26 @@
+<article class="post">
+  <div class="heading">
+    <app-back-link class="back" link="/feed" label="Retour au fil d’actualité" />
+    @if (post.hasValue()) {
+      <h1 class="title">{{ post.value().title }}</h1>
+    } @else if (post.error()) {
+      <p class="failure" role="alert">
+        {{
+          notFound()
+            ? 'Cet article n’existe pas.'
+            : 'L’article n’a pas pu être chargé. Veuillez réessayer.'
+        }}
+      </p>
+    }
+  </div>
+  @if (post.hasValue()) {
+    <p class="meta">
+      <time [attr.datetime]="post.value().createdAt">
+        {{ post.value().createdAt | date: 'dd/MM/yyyy' }}
+      </time>
+      <span>{{ post.value().author }}</span>
+      <span>{{ post.value().topic }}</span>
+    </p>
+    <p class="content">{{ post.value().content }}</p>
+  }
+</article>

@@ -22,8 +22,8 @@ Avant de l’ouvrir à un large public, ORION souhaite le tester avec un MVP (Mi
 | Profil | Consulter et modifier son profil, supprimer son compte | ✅ Terminé |
 | Thème | Consulter la liste de tous les thèmes | ✅ Terminé |
 | Abonnement | S’abonner à un thème et s’en désabonner | ✅ Terminé |
-| Fil d’actualité | Consulter et trier son fil d’actualité | ⏳ À venir |
-| Article | Ajouter et consulter un article | ⏳ À venir |
+| Fil d’actualité | Consulter et trier son fil d’actualité | ✅ Terminé |
+| Article | Ajouter et consulter un article | ✅ Terminé |
 | Commentaire | Commenter un article | ⏳ À venir |
 | Pages légales | Consulter les mentions légales et la politique de confidentialité | ⏳ À venir |
 | Responsive | Utiliser l’application sur mobile comme sur ordinateur | ⏳ À venir |
@@ -201,7 +201,7 @@ L’API REST, servie sous `/api`, échange du JSON. L’inscription et la connex
 - **`PUT /api/topics/{id}/subscription`** : abonne l’utilisateur au thème → 204.
 - **`DELETE /api/topics/{id}/subscription`** : désabonne l’utilisateur du thème → 204.
 - **`GET /api/feed`** : renvoie le fil d’actualité, du plus récent au plus ancien, ou l’inverse avec `?direction=asc` → 200.
-- **`POST /api/posts`** (`topicId`, `title`, `content`) : crée un article → 201, article.
+- **`POST /api/posts`** (`topicId`, `title`, `content`) : crée un article dans un thème que suit l’utilisateur → 201, article.
 - **`GET /api/posts/{id}`** : renvoie un article et ses commentaires → 200.
 - **`POST /api/posts/{id}/comments`** (`content`) : commente l’article → 201, commentaire.
 

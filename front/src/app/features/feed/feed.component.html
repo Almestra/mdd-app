@@ -1,0 +1,36 @@
+<section class="feed">
+  <h1 class="cdk-visually-hidden">Fil d’actualité</h1>
+  <div class="toolbar">
+    <div class="actions">
+      <a class="create" matButton="filled" routerLink="/posts/new">Créer un article</a>
+      <button class="sort" matButton type="button" (click)="reverse()">
+        Trier par
+        <span class="cdk-visually-hidden">
+          {{
+            direction() === 'desc'
+              ? 'date, du plus récent au plus ancien'
+              : 'date, du plus ancien au plus récent'
+          }}
+        </span>
+        <span class="arrow" aria-hidden="true">{{ direction() === 'desc' ? '↓' : '↑' }}</span>
+      </button>
+    </div>
+  </div>
+  @if (posts.error()) {
+    <p class="failure" role="alert">
+      Le fil d’actualité n’a pas pu être chargé. Veuillez réessayer.
+    </p>
+  } @else if (posts.hasValue()) {
+    @if (posts.value().length > 0) {
+      <ul class="cards">
+        @for (post of posts.value(); track post.id) {
+          <li>
+            <app-post-card [post]="post" />
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="empty">Aucun article pour l’instant.</p>
+    }
+  }
+</section>

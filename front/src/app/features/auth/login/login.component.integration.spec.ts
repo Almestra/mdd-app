@@ -22,6 +22,9 @@ describe('Login page', () => {
     submit(page);
     const request = http.expectOne('/api/auth/login');
     request.flush(user);
+    // The feed opens and asks for its posts
+    const feed = await vi.waitFor(() => http.expectOne('/api/feed?direction=desc'));
+    feed.flush([]);
     await fixture.whenStable();
 
     // Assert
