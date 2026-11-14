@@ -2,17 +2,16 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, effect, inject, input, numberAttribute } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { MatIconAnchor } from '@angular/material/button';
 import { Title } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
 
+import { BackLink } from '../../../shared/back-link/back-link.component';
 import { PostsApi } from '../posts-api.service';
 
 /**
  * The page of a post: its title, date, author, topic and whole content.
  */
 @Component({
-  imports: [DatePipe, MatIconAnchor, RouterLink],
+  imports: [BackLink, DatePipe],
   selector: 'app-post-detail',
   styleUrl: './post-detail.component.scss',
   templateUrl: './post-detail.component.html',

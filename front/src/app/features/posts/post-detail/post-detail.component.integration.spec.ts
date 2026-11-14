@@ -65,7 +65,7 @@ describe('Post page', () => {
     const { fixture, http, page } = await openPost();
 
     // Act
-    (page.querySelector('a.back') as HTMLAnchorElement).click();
+    (page.querySelector('.back a') as HTMLAnchorElement).click();
     const request = await vi.waitFor(() => http.expectOne('/api/feed?direction=desc'));
     request.flush([]);
     await fixture.whenStable();

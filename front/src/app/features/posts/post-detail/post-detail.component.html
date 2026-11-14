@@ -1,10 +1,6 @@
 <article class="post">
   <div class="heading">
-    <a class="back" matIconButton routerLink="/feed" aria-label="Retour au fil d’actualité">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-      </svg>
-    </a>
+    <app-back-link class="back" link="/feed" label="Retour au fil d’actualité" />
     @if (post.hasValue()) {
       <h1 class="title">{{ post.value().title }}</h1>
     } @else if (post.error()) {
