@@ -3,6 +3,7 @@ package com.orion.mdd.comment;
 import com.jayway.jsonpath.JsonPath;
 import com.orion.mdd.Csrf;
 import com.orion.mdd.IntegrationTest;
+import com.orion.mdd.Rows;
 import com.orion.mdd.common.security.AuthCookieService;
 import com.orion.mdd.user.User;
 import com.orion.mdd.user.UserRepository;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -60,11 +60,8 @@ class CommentCreationIntegrationTests {
         token = new Cookie("mdd_token", authCookieService.create(user.getId()).getValue());
         User ford = userRepository.saveAndFlush(new User("ford.prefect", "ford.prefect@example.com", "hash"));
         Long topicId = Objects.requireNonNull(jdbcTemplate.queryForObject("SELECT MIN(id) FROM topics", Long.class));
-        postId = new SimpleJdbcInsert(jdbcTemplate).withTableName("posts").usingGeneratedKeyColumns("id")
-                .executeAndReturnKey(
-                        Map.of("title", "Don’t panic", "content", "Le Guide est plus utile qu’une serviette.",
-                                "created_at", "2026-11-13 10:42:00", "author_id", ford.getId(), "topic_id", topicId))
-                .longValue();
+        postId = Rows.insertPost(jdbcTemplate, ford.getId(), topicId, "Don’t panic",
+                "Le Guide est plus utile qu’une serviette.", "2026-11-13 10:42:00");
     }
 
     @Test

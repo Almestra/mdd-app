@@ -1,6 +1,7 @@
 package com.orion.mdd.post;
 
 import com.orion.mdd.IntegrationTest;
+import com.orion.mdd.Rows;
 import com.orion.mdd.common.security.AuthCookieService;
 import com.orion.mdd.user.User;
 import com.orion.mdd.user.UserRepository;
@@ -107,9 +108,7 @@ class FeedIntegrationTests {
     }
 
     private void write(String title, Long topicId, String createdAt) {
-        jdbcTemplate.update(
-                "INSERT INTO posts (title, content, created_at, author_id, topic_id) VALUES (?, ?, ?, ?, ?)",
-                title, "42", createdAt, ford.getId(), topicId);
+        Rows.insertPost(jdbcTemplate, ford.getId(), topicId, title, "42", createdAt);
     }
 
 }
