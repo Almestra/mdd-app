@@ -26,7 +26,8 @@ class ContentRulesTests {
     private static final Validator VALIDATOR = FACTORY.getValidator();
 
     /** Carries the rules as the request records do. */
-    private record Writing(@ValidCommentContent String comment) {
+    private record Writing(@RequiredTopic Long topicId, @ValidPostTitle String title, @ValidPostContent String content,
+            @ValidCommentContent String comment) {
     }
 
     @AfterAll
@@ -48,6 +49,10 @@ class ContentRulesTests {
 
     private static Stream<Arguments> invalidValues() {
         return Stream.of(
+                Arguments.of("title", "   ", Set.of("NotBlank")),
+                Arguments.of("title", "4".repeat(101), Set.of("Size")),
+                Arguments.of("content", "   ", Set.of("NotBlank")),
+                Arguments.of("content", "4".repeat(10_001), Set.of("Size")),
                 Arguments.of("comment", "   ", Set.of("NotBlank")),
                 Arguments.of("comment", "4".repeat(2_001), Set.of("Size")));
     }
@@ -64,6 +69,10 @@ class ContentRulesTests {
 
     private static Stream<Arguments> validValues() {
         return Stream.of(
+                Arguments.of("title", "42"),
+                Arguments.of("title", "4".repeat(100)),
+                Arguments.of("content", "42"),
+                Arguments.of("content", "4".repeat(10_000)),
                 Arguments.of("comment", "42"),
                 Arguments.of("comment", "4".repeat(2_000)));
     }
@@ -71,11 +80,11 @@ class ContentRulesTests {
     @Test
     void refusesAMissingValue() {
         // Act
-        Set<ConstraintViolation<Writing>> violations = VALIDATOR.validate(new Writing(null));
+        Set<ConstraintViolation<Writing>> violations = VALIDATOR.validate(new Writing(null, null, null, null));
 
         // Assert: one message per field, so that each one shows under its own field
         assertThat(violations).extracting(violation -> violation.getPropertyPath().toString())
-                .containsExactlyInAnyOrder("comment");
+                .containsExactlyInAnyOrder("topicId", "title", "content", "comment");
     }
 
 }
