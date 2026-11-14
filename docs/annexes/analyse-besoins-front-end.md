@@ -32,13 +32,13 @@ Cette annexe a pour but de relier chaque écran des maquettes aux fonctionnalit�
 - **Accès** : utilisateur connecté.
 - **Fonctionnalités** : Fil d’actualité.
 - **Contenu** : bandeau, boutons « Créer un article » et « Trier par », puis les articles, chacun avec son titre, sa date, son auteur et son contenu tronqué à 5 lignes.
-- **Règles** : seuls les articles des thèmes auxquels l’utilisateur est abonné sont affichés, du plus récent au plus ancien ; l’ordre peut être inversé.
+- **Règles** : seuls les articles des thèmes auxquels l’utilisateur est abonné sont affichés, du plus récent au plus ancien ; l’ordre peut être inversé ; un clic sur un article l’ouvre.
 
 ### Article
 
-- **Accès** : utilisateur connecté.
+- **Accès** : utilisateur connecté, depuis le fil d’actualité ou après la création de l’article.
 - **Fonctionnalités** : Article (consultation), Commentaire.
-- **Contenu** : bandeau, titre, date, auteur, thème et contenu de l’article, puis la section « Commentaires » : les commentaires avec leur auteur, suivis d’une zone de saisie « Écrivez ici votre commentaire » et d’un bouton d’envoi.
+- **Contenu** : bandeau, flèche de retour vers le fil d’actualité, titre, date, auteur, thème et contenu de l’article, puis la section « Commentaires » : les commentaires avec leur auteur, suivis d’une zone de saisie « Écrivez ici votre commentaire » et d’un bouton d’envoi.
 - **Règles** : l’auteur et la date des commentaires sont ajoutés automatiquement ; pas de sous-commentaires.
 
 ### Création d’article
@@ -46,7 +46,7 @@ Cette annexe a pour but de relier chaque écran des maquettes aux fonctionnalit�
 - **Accès** : utilisateur connecté, depuis le fil d’actualité.
 - **Fonctionnalités** : Article (ajout).
 - **Contenu** : flèche de retour, titre « Créer un nouvel article », liste déroulante « Sélectionner un thème », champs « Titre de l’article » et « Contenu de l’article », et bouton « Créer ».
-- **Règles** : l’utilisateur choisit le thème et saisit le titre et le contenu ; l’auteur et la date sont renseignés automatiquement.
+- **Règles** : l’utilisateur choisit l’un des thèmes auxquels il est abonné, puis saisit le titre et le contenu ; l’auteur et la date sont renseignés automatiquement ; une fois l’article créé, sa page s’affiche. Sans abonnement, un lien l’invite à s’abonner depuis la page des thèmes.
 
 ### Thèmes
 
@@ -89,4 +89,4 @@ Un bandeau dont le visuel change comme suit :
 - **Pages légales et suppression du compte** : absentes des spécifications et des maquettes, elles répondent aux obligations légales : mentions légales, politique de confidentialité et droit à l’effacement des données personnelles (RGPD).
 - **Formulaire du mot de passe** : la maquette place le mot de passe dans le formulaire du profil ; il a son propre formulaire, qui demande le mot de passe actuel, pour qu’une session restée ouverte ne suffise pas à le changer.
 - **Messages de confirmation** : absents de la maquette, « Profil mis à jour. » et « Mot de passe modifié. » indiquent que l’enregistrement a réussi, puisque la page reste affichée.
-- **Cartes par ligne** : la maquette en montre deux sur ordinateur. Sur la page des thèmes comme dans les abonnements du profil, les cartes gardent une largeur fixe de 340 px, et chaque ligne en compte autant que l’écran le permet, jusqu’à quatre. Deux cartes étirées sur toute la largeur d’un grand écran donneraient des lignes de texte trop longues pour être lues confortablement.
+- **Cartes par ligne** : la maquette en montre deux sur ordinateur. Sur la page des thèmes, dans les abonnements du profil et dans le fil d’actualité, les cartes gardent une largeur fixe de 340 px, et chaque ligne en compte autant que l’écran le permet, jusqu’à quatre. Deux cartes étirées sur toute la largeur d’un grand écran donneraient des lignes de texte trop longues pour être lues confortablement.
