@@ -65,6 +65,19 @@ public class PostService {
     }
 
     /**
+     * Finds a post, so that another feature can attach something to it.
+     *
+     * @param id
+     *            the post's identifier
+     * @return the post
+     * @throws PostNotFoundException
+     *             if the post does not exist
+     */
+    public Post findPost(Long id) {
+        return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+    }
+
+    /**
      * Returns the feed of a user: the posts of the topics they follow, sorted by date. The posts created in the same
      * second keep the order in which they were created.
      *
