@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Post } from './post.model';
+import { PostRequest } from './post-request.model';
 
 /** The order of the feed: the newest posts first (desc) or the oldest first (asc). */
 export type FeedDirection = 'desc' | 'asc';
@@ -23,5 +24,12 @@ export class PostsApi {
    */
   get(id: number): Observable<Post> {
     return this.http.get<Post>(`/api/posts/${id}`);
+  }
+
+  /**
+   * Creates a post in a topic the user follows.
+   */
+  create(request: PostRequest): Observable<Post> {
+    return this.http.post<Post>('/api/posts', request);
   }
 }

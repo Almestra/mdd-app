@@ -19,15 +19,29 @@
   margin-bottom: 1.5rem;
 }
 
-// Centered on a phone, on the right of the cards on a larger screen
+// The create button above the sort control, both centered on a phone; at both ends of the row,
+// lined up with the cards, on a larger screen
 .actions {
   display: flex;
+  flex-direction: column;
   grid-column: 1 / -1;
-  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 
   @media (min-width: 600px) {
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
   }
+}
+
+// Like the filled buttons of the forms
+.create {
+  width: 10rem;
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 8px,
+    )
+  );
 }
 
 // Sort by: black text, the size and weight of the mockup

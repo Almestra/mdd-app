@@ -1,0 +1,54 @@
+<app-back-link class="back" link="/feed" label="Retour au fil d’actualité" />
+<div class="content">
+  <h1>Créer un nouvel article</h1>
+  <form class="form" [formRoot]="postForm">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-select
+        id="topic"
+        placeholder="Sélectionner un thème"
+        aria-label="Sélectionner un thème"
+        [formField]="postForm.topicId"
+      >
+        @for (topic of followedTopics(); track topic.id) {
+          <mat-option [value]="topic.id">{{ topic.title }}</mat-option>
+        }
+      </mat-select>
+      <mat-error>{{ postForm.topicId().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+    @if (topics.error()) {
+      <p class="failure" role="alert">Les thèmes n’ont pas pu être chargés. Veuillez réessayer.</p>
+    } @else if (topics.hasValue() && followedTopics().length === 0) {
+      <p class="hint">
+        Pour publier un article, abonnez-vous d’abord à un thème depuis la page
+        <a routerLink="/topics">Thèmes</a>.
+      </p>
+    }
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <input
+        matInput
+        id="title"
+        placeholder="Titre de l’article"
+        aria-label="Titre de l’article"
+        [formField]="postForm.title"
+      />
+      <mat-error>{{ postForm.title().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <textarea
+        matInput
+        id="content"
+        placeholder="Contenu de l’article"
+        aria-label="Contenu de l’article"
+        [formField]="postForm.content"
+      ></textarea>
+      <mat-error>{{ postForm.content().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+
+    @if (failure()) {
+      <p class="failure" role="alert">{{ failure() }}</p>
+    }
+    <button matButton="filled" type="submit" [disabled]="postForm().submitting()">Créer</button>
+  </form>
+</div>

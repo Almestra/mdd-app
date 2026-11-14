@@ -1,0 +1,62 @@
+@use 'form';
+
+// Like the login and registration pages: the back arrow at the top left of the page, the title
+// and the form centered in a narrow column
+:host {
+  position: relative;
+  display: block;
+  padding: 1rem;
+
+  @media (min-width: 600px) {
+    padding: 1.5rem 2rem;
+  }
+}
+
+.back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+
+  @media (min-width: 600px) {
+    top: 1.5rem;
+    left: 2rem;
+  }
+}
+
+// On a phone, the column starts below the back arrow
+.content {
+  max-width: 24rem;
+  margin: 3.5rem auto 0;
+
+  @media (min-width: 600px) {
+    margin-top: 0;
+  }
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font: var(--mat-sys-headline-small);
+  font-weight: 700;
+}
+
+// With no label above them, the fields need room between them
+.form {
+  gap: 1.5rem;
+}
+
+// 36px between the last field and the button, as in the other forms
+button {
+  margin-top: 0.75rem;
+}
+
+// The content field of the mockup: 212px high, with its two 8px paddings. A minimum height, since
+// Material sets the height itself; the author can still make the field taller
+textarea {
+  min-height: 196px;
+}
+
+// Right under the list of topics it explains
+.hint {
+  margin: -1rem 0 0;
+}
