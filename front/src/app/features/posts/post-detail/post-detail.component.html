@@ -22,5 +22,6 @@
       <span>{{ post.value().topic }}</span>
     </p>
     <p class="content">{{ post.value().content }}</p>
+    <app-comments class="comments" [postId]="id()" />
   }
 </article>

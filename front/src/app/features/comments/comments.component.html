@@ -1,0 +1,20 @@
+<hr />
+<h2>Commentaires</h2>
+@if (comments.error()) {
+  <p class="failure" role="alert">
+    Les commentaires n’ont pas pu être chargés. Veuillez réessayer.
+  </p>
+} @else if (comments.hasValue()) {
+  @if (comments.value().length > 0) {
+    <ul class="comments">
+      @for (comment of comments.value(); track comment.id) {
+        <li>
+          <p class="author">{{ comment.author }}</p>
+          <p class="content">{{ comment.content }}</p>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="empty">Aucun commentaire pour l’instant.</p>
+  }
+}

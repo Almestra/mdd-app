@@ -1,0 +1,72 @@
+// The width of the comments and of the comment field, centered in the section
+$width: 570px;
+
+:host {
+  display: block;
+}
+
+// The line of the mockup between the post and its comments, like the one of the profile
+hr {
+  margin: 0 0 1.5rem;
+  border: none;
+  border-top: 1px solid var(--mat-sys-on-surface);
+}
+
+h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+// On a phone, each author above their comment. On a larger screen, the authors in a column on the
+// left, as wide as the longest name up to 10rem, each one centered beside their comment
+.comments {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  max-width: $width;
+  margin: 30px auto 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: 600px) {
+    grid-template-columns: fit-content(10rem) minmax(0, 1fr);
+  }
+}
+
+li {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 8px;
+
+  @media (min-width: 600px) {
+    grid-template-columns: subgrid;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.author,
+.content {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+// The line breaks of the author are kept
+.content {
+  padding: 16px;
+  border-radius: 16px;
+  background: #eeeeee;
+  white-space: pre-line;
+}
+
+.empty,
+.failure {
+  margin: 30px 0 0;
+}
+
+.failure {
+  color: var(--mat-sys-error);
+}

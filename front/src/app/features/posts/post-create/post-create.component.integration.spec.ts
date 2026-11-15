@@ -94,9 +94,10 @@ describe('Post creation page', () => {
     submit(opened.page);
     const request = opened.http.expectOne('/api/posts');
     request.flush(created, { status: 201, statusText: 'Created' });
-    // The page of the post opens and asks for it
+    // The page of the post opens and asks for it, then for its comments
     const post = await vi.waitFor(() => opened.http.expectOne('/api/posts/7'));
     post.flush(created);
+    (await vi.waitFor(() => opened.http.expectOne('/api/posts/7/comments'))).flush([]);
     await opened.fixture.whenStable();
 
     // Assert

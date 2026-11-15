@@ -5,13 +5,14 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 
 import { BackLink } from '../../../shared/back-link/back-link.component';
+import { Comments } from '../../comments/comments.component';
 import { PostsApi } from '../posts-api.service';
 
 /**
- * The page of a post: its title, date, author, topic and whole content.
+ * The page of a post: its title, date, author, topic and whole content, then its comments.
  */
 @Component({
-  imports: [BackLink, DatePipe],
+  imports: [BackLink, Comments, DatePipe],
   selector: 'app-post-detail',
   styleUrl: './post-detail.component.scss',
   templateUrl: './post-detail.component.html',
