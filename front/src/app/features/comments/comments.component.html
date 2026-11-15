@@ -18,3 +18,31 @@
     <p class="empty">Aucun commentaire pour l’instant.</p>
   }
 }
+
+<form class="comment-form" [formRoot]="commentForm">
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <textarea
+      matInput
+      id="comment"
+      placeholder="Écrivez ici votre commentaire"
+      aria-label="Écrivez ici votre commentaire"
+      [formField]="commentForm.content"
+    ></textarea>
+    <mat-error>{{ commentForm.content().errors()[0]?.message }}</mat-error>
+  </mat-form-field>
+  <button
+    matIconButton
+    class="send"
+    type="submit"
+    aria-label="Envoyer le commentaire"
+    [disabled]="commentForm().submitting()"
+  >
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <path d="M45.5 2.5 21.85 26.15" />
+      <path d="M45.5 2.5 30.45 45.5l-8.6-19.35L2.5 17.55z" />
+    </svg>
+  </button>
+  @if (failure()) {
+    <p class="failure" role="alert">{{ failure() }}</p>
+  }
+</form>

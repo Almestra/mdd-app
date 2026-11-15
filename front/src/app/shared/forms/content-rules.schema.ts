@@ -22,3 +22,11 @@ export const postContentRules = schema<string>((path) => {
   required(path, { message: 'Le contenu est obligatoire.' });
   maxLength(path, 10_000, { message: 'Le contenu compte 10 000 caractères au plus.' });
 });
+
+/**
+ * The text of a comment: 2,000 characters at most, as the API requires.
+ */
+export const commentContentRules = schema<string>((path) => {
+  required(path, { message: 'Le commentaire est obligatoire.' });
+  maxLength(path, 2_000, { message: 'Le commentaire compte 2 000 caractères au plus.' });
+});

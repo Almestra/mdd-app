@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
-import { openApp, OpenedApp } from '../../../../testing/app-testing';
+import { fieldError, openApp, OpenedApp, submit, type } from '../../../../testing/app-testing';
 import { User } from '../../../core/session/user.model';
 import { Comment } from '../../comments/comment.model';
 import { Post } from '../post.model';
@@ -122,6 +122,133 @@ describe('Post page', () => {
     expect(page.querySelector('app-comments [role="alert"]')?.textContent).toContain(
       'Les commentaires n’ont pas pu être chargés.',
     );
+  });
+
+  it('adds the comment under the others, then empties the field', async () => {
+    // Arrange
+    const { fixture, http, page } = await openPost();
+    type(page, 'comment', 'So long, and thanks for all the fish.');
+
+    // Act
+    submit(page);
+    const request = http.expectOne({ method: 'POST', url: '/api/posts/2/comments' });
+    request.flush(
+      {
+        id: 9,
+        content: 'So long, and thanks for all the fish.',
+        createdAt: '2026-11-13T12:30:00Z',
+        author: 'arthur.dent',
+      },
+      { status: 201, statusText: 'Created' },
+    );
+    await fixture.whenStable();
+
+    // Assert
+    expect(request.request.body).toEqual({ content: 'So long, and thanks for all the fish.' });
+    const items = page.querySelectorAll('app-comments li');
+    expect(items).toHaveLength(3);
+    expect(items[2].textContent).toContain('So long, and thanks for all the fish.');
+    expect((page.querySelector('#comment') as HTMLTextAreaElement).value).toBe('');
+  });
+
+  it('sends nothing while the comment is empty', async () => {
+    // Arrange
+    const { fixture, http, page } = await openPost();
+
+    // Act
+    submit(page);
+    await fixture.whenStable();
+
+    // Assert
+    http.expectNone({ method: 'POST', url: '/api/posts/2/comments' });
+    expect(fieldError(page, 'comment')?.textContent).toContain('Le commentaire est obligatoire.');
+  });
+
+  it('keeps the comment and says so when it cannot be sent', async () => {
+    // Arrange
+    const { fixture, http, page } = await openPost();
+    type(page, 'comment', 'So long, and thanks for all the fish.');
+
+    // Act
+    submit(page);
+    http
+      .expectOne({ method: 'POST', url: '/api/posts/2/comments' })
+      .flush(null, { status: 500, statusText: 'Internal Server Error' });
+    await fixture.whenStable();
+
+    // Assert
+    expect(page.querySelector('app-comments [role="alert"]')?.textContent).toContain(
+      'Une erreur est survenue.',
+    );
+    expect((page.querySelector('#comment') as HTMLTextAreaElement).value).toBe(
+      'So long, and thanks for all the fish.',
+    );
+  });
+
+  it('takes the failure message away once a new try succeeds', async () => {
+    // Arrange: a first try fails
+    const { fixture, http, page } = await openPost();
+    type(page, 'comment', 'So long, and thanks for all the fish.');
+    submit(page);
+    http
+      .expectOne({ method: 'POST', url: '/api/posts/2/comments' })
+      .flush(null, { status: 500, statusText: 'Internal Server Error' });
+    await fixture.whenStable();
+
+    // Act: the second one succeeds
+    submit(page);
+    http.expectOne({ method: 'POST', url: '/api/posts/2/comments' }).flush(
+      {
+        id: 9,
+        content: 'So long, and thanks for all the fish.',
+        createdAt: '2026-11-13T12:30:00Z',
+        author: 'arthur.dent',
+      },
+      { status: 201, statusText: 'Created' },
+    );
+    await fixture.whenStable();
+
+    // Assert
+    expect(page.querySelector('app-comments [role="alert"]')).toBeNull();
+  });
+
+  it('keeps the comment it sends even when the list could not be loaded', async () => {
+    // Arrange: the list fails to load
+    const { fixture, http, page } = await openApp('/posts/2', user);
+    http.expectOne('/api/posts/2').flush(post);
+    const list = await vi.waitFor(() => http.expectOne('/api/posts/2/comments'));
+    list.flush(null, { status: 500, statusText: 'Internal Server Error' });
+    await fixture.whenStable();
+    type(page, 'comment', 'So long, and thanks for all the fish.');
+
+    // Act: the comment is created, then the list loads again
+    submit(page);
+    http.expectOne({ method: 'POST', url: '/api/posts/2/comments' }).flush(
+      {
+        id: 9,
+        content: 'So long, and thanks for all the fish.',
+        createdAt: '2026-11-13T12:30:00Z',
+        author: 'arthur.dent',
+      },
+      { status: 201, statusText: 'Created' },
+    );
+    const reload = await vi.waitFor(() =>
+      http.expectOne({ method: 'GET', url: '/api/posts/2/comments' }),
+    );
+    reload.flush([
+      {
+        id: 9,
+        content: 'So long, and thanks for all the fish.',
+        createdAt: '2026-11-13T12:30:00Z',
+        author: 'arthur.dent',
+      },
+    ]);
+    await fixture.whenStable();
+
+    // Assert
+    expect(page.querySelector('app-comments [role="alert"]')).toBeNull();
+    expect(page.querySelectorAll('app-comments li')).toHaveLength(1);
+    expect((page.querySelector('#comment') as HTMLTextAreaElement).value).toBe('');
   });
 
   it('says so when the post does not exist', async () => {
