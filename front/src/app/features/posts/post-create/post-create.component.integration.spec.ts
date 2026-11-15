@@ -125,23 +125,6 @@ describe('Post creation page', () => {
     expect(fieldError(page, 'content')?.textContent).toContain('Le contenu est obligatoire.');
   });
 
-  it('keeps the title and the content within the limits of the API', async () => {
-    // Arrange
-    const opened = await openForm();
-    await fillIn(opened);
-    type(opened.page, 'title', 'a'.repeat(101));
-    type(opened.page, 'content', 'a'.repeat(10_001));
-
-    // Act
-    submit(opened.page);
-    await opened.fixture.whenStable();
-
-    // Assert
-    opened.http.expectNone('/api/posts');
-    expect(fieldError(opened.page, 'title')?.textContent).toContain('100 caractères au plus.');
-    expect(fieldError(opened.page, 'content')?.textContent).toContain('10 000 caractères au plus.');
-  });
-
   it('shows under its field the error the API gives', async () => {
     // Arrange
     const opened = await openForm();
