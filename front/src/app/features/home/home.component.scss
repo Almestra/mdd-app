@@ -6,7 +6,8 @@
   align-items: center;
   justify-content: center;
   gap: 2.5rem;
-  min-height: 100dvh;
+  // The height of the screen, less the footer
+  min-height: 100%;
 }
 
 .logo {

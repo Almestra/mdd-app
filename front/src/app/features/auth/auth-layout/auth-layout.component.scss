@@ -3,7 +3,8 @@
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  // The height of the screen, less the footer
+  min-height: 100%;
 }
 
 // No banner on a small screen, where the page shows a larger logo above the form instead

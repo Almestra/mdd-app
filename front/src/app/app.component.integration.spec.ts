@@ -58,4 +58,37 @@ describe('App', () => {
     // Assert
     expect(TestBed.inject(Router).url).toBe('/login');
   });
+
+  it.each<[string, User | null]>([
+    ['/', null],
+    ['/login', null],
+    ['/legal-notice', null],
+    ['/feed', user],
+  ])('links the legal pages from the footer of %s', async (url, who) => {
+    // Act
+    const { page } = await openApp(url, who);
+
+    // Assert
+    const footer = page.querySelector('footer');
+    expect(footer?.querySelector('a[href="/legal-notice"]')?.textContent).toContain(
+      'Mentions légales',
+    );
+    expect(footer?.querySelector('a[href="/privacy-policy"]')?.textContent).toContain(
+      'Politique de confidentialité',
+    );
+  });
+
+  it('marks the legal page the user is on in the footer', async () => {
+    // Act
+    const { page } = await openApp('/privacy-policy', null);
+
+    // Assert
+    const footer = page.querySelector('footer');
+    expect(footer?.querySelector('a[href="/privacy-policy"]')?.getAttribute('aria-current')).toBe(
+      'page',
+    );
+    expect(
+      footer?.querySelector('a[href="/legal-notice"]')?.getAttribute('aria-current'),
+    ).toBeNull();
+  });
 });
