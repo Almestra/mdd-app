@@ -2,7 +2,7 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
-import { openApp } from '../testing/app-testing';
+import { openApp, OpenedApp } from '../testing/app-testing';
 import { Session } from './core/session/session.service';
 import { User } from './core/session/user.model';
 
@@ -49,6 +49,74 @@ describe('App', () => {
     expect(request.request.method).toBe('POST');
     expect(TestBed.inject(Session).user()).toBeNull();
     expect(TestBed.inject(Router).url).toBe('/');
+  });
+
+  describe('side menu', () => {
+    // Material opens it at the end of the page, outside the banner
+    function sideMenu(): HTMLElement | null {
+      return document.querySelector('mat-dialog-container');
+    }
+
+    // Opens the menu of the banner on the post creation page, which none of its links leads to,
+    // once the page has loaded the topics
+    async function openMenu(): Promise<OpenedApp> {
+      const opened = await openApp('/posts/new', user);
+      opened.http.expectOne('/api/topics').flush([]);
+      const menuButton = opened.page.querySelector(
+        'header button[aria-label="Ouvrir le menu"]',
+      ) as HTMLButtonElement;
+      menuButton.click();
+      await opened.fixture.whenStable();
+      return opened;
+    }
+
+    it('shows the links of the banner', async () => {
+      // Act
+      await openMenu();
+
+      // Assert
+      const menu = sideMenu();
+      expect(menu?.querySelector('button')?.textContent).toContain('Se déconnecter');
+      expect(menu?.querySelector('a[href="/feed"]')?.textContent).toContain('Articles');
+      expect(menu?.querySelector('a[href="/topics"]')?.textContent).toContain('Thèmes');
+      expect(menu?.querySelector('a[href="/profile"]')?.getAttribute('aria-label')).toBe('Profil');
+    });
+
+    it.each([
+      ['/feed', '/api/feed?direction=desc'],
+      ['/topics', '/api/topics'],
+      ['/profile', '/api/topics'],
+    ])('opens %s, then closes', async (url, dataRequest) => {
+      // Arrange
+      const { fixture, http } = await openMenu();
+      const link = sideMenu()?.querySelector(`a[href="${url}"]`) as HTMLAnchorElement;
+
+      // Act: once open, the page asks for its data
+      link.click();
+      const request = await vi.waitFor(() => http.expectOne(dataRequest));
+      request.flush([]);
+      await fixture.whenStable();
+
+      // Assert
+      expect(TestBed.inject(Router).url).toBe(url);
+      expect(sideMenu()).toBeNull();
+    });
+
+    it('logs the user out, then closes', async () => {
+      // Arrange
+      const { fixture, http } = await openMenu();
+      const logOut = sideMenu()?.querySelector('button') as HTMLButtonElement;
+
+      // Act
+      logOut.click();
+      http.expectOne('/api/auth/logout').flush(null, { status: 204, statusText: 'No Content' });
+      await fixture.whenStable();
+
+      // Assert
+      expect(TestBed.inject(Session).user()).toBeNull();
+      expect(TestBed.inject(Router).url).toBe('/');
+      expect(sideMenu()).toBeNull();
+    });
   });
 
   it('sends a visitor from the feed to the login page', async () => {

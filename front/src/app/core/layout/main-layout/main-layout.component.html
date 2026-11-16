@@ -1,6 +1,6 @@
 <header class="banner">
   <a routerLink="/feed"><img src="logo.png" alt="MDD" width="695" height="401" /></a>
-  <nav aria-label="Navigation principale">
+  <nav class="links" aria-label="Navigation principale">
     <button class="logout" matButton type="button" (click)="logOut()">Se déconnecter</button>
     <a
       class="link"
@@ -26,16 +26,71 @@
       ariaCurrentWhenActive="page"
       aria-label="Profil"
     >
-      <svg viewBox="0 0 48 48" aria-hidden="true">
-        <circle class="disk" cx="24" cy="24" r="22.5" />
-        <g class="person">
-          <path d="M12 38v-3.12a6.24 6.24 0 0 1 6.24-6.24h12.47a6.24 6.24 0 0 1 6.24 6.24V38" />
-          <circle cx="24.47" cy="16.24" r="6.24" />
-        </g>
-      </svg>
+      <ng-container [ngTemplateOutlet]="profileIcon" />
     </a>
   </nav>
+  <button
+    class="menu"
+    matIconButton
+    type="button"
+    aria-label="Ouvrir le menu"
+    aria-haspopup="dialog"
+    (click)="openMenu()"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+    </svg>
+  </button>
 </header>
 <main>
   <router-outlet />
 </main>
+
+<!-- The side menu of a phone: the same links, each of them closing the menu -->
+<ng-template #menu let-dialogRef="dialogRef">
+  <nav class="side-links" aria-label="Navigation principale">
+    <button class="logout" matButton type="button" (click)="dialogRef.close(); logOut()">
+      Se déconnecter
+    </button>
+    <a
+      class="link"
+      matButton
+      routerLink="/feed"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      (click)="dialogRef.close()"
+      >Articles</a
+    >
+    <a
+      class="link"
+      matButton
+      routerLink="/topics"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      (click)="dialogRef.close()"
+      >Thèmes</a
+    >
+    <a
+      class="profile"
+      matIconButton
+      routerLink="/profile"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      aria-label="Profil"
+      (click)="dialogRef.close()"
+    >
+      <ng-container [ngTemplateOutlet]="profileIcon" />
+    </a>
+  </nav>
+</ng-template>
+
+<!-- The profile icon of the mockup, in the banner and in the side menu -->
+<ng-template #profileIcon>
+  <svg viewBox="0 0 48 48" aria-hidden="true">
+    <circle class="disk" cx="24" cy="24" r="22.5" />
+    <g class="person">
+      <path d="M12 38v-3.12a6.24 6.24 0 0 1 6.24-6.24h12.47a6.24 6.24 0 0 1 6.24 6.24V38" />
+      <circle cx="24.47" cy="16.24" r="6.24" />
+    </g>
+  </svg>
+</ng-template>
