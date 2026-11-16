@@ -39,7 +39,7 @@ Cette annexe a pour but de relier chaque écran des maquettes aux fonctionnalit�
 - **Accès** : utilisateur connecté, depuis le fil d’actualité ou après la création de l’article.
 - **Fonctionnalités** : Article (consultation), Commentaire.
 - **Contenu** : bandeau, flèche de retour vers le fil d’actualité, titre, date, auteur, thème et contenu de l’article, puis la section « Commentaires » : les commentaires avec leur auteur, suivis d’une zone de saisie « Écrivez ici votre commentaire » et d’un bouton d’envoi.
-- **Règles** : l’auteur et la date des commentaires sont ajoutés automatiquement ; pas de sous-commentaires.
+- **Règles** : tout utilisateur connecté peut commenter un article, qu’il suive son thème ou non ; les commentaires vont du plus ancien au plus récent ; leur auteur et leur date sont ajoutés automatiquement ; pas de sous-commentaires.
 
 ### Création d’article
 
