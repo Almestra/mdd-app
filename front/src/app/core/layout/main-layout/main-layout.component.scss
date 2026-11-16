@@ -2,11 +2,73 @@
 @use 'banner';
 @use 'danger-button';
 
-// The logo on the left, the navigation on the right
+// The width from which the banner has room for its links: they need 645 pixels, 660 with a
+// scrollbar. Below it, a menu button opens them in a side panel
+$wide: 768px;
+
+// The logo on the left, the links or the menu button on the right
 .banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.links {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+
+  @media (min-width: $wide) {
+    display: flex;
+  }
+}
+
+// The menu icon: 32 pixels in a button as big as the profile icon. Black, then violet on hover and
+// on keyboard focus, like the other controls of the banner
+.menu {
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-on-surface),
+      icon-size: 32px,
+      state-layer-size: 48px,
+      state-layer-color: var(--mat-sys-primary),
+      ripple-color: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent),
+    )
+  );
+
+  &:hover,
+  &:focus-visible {
+    @include mat.icon-button-overrides(
+      (
+        icon-color: var(--mat-sys-primary),
+      )
+    );
+  }
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+
+  @media (min-width: $wide) {
+    display: none;
+  }
+}
+
+// The side menu: the links one under the other, against the right edge, and the profile icon at
+// the bottom
+.side-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 2rem 1.5rem;
+
+  .profile {
+    margin-top: auto;
+  }
 }
 
 .logout {
@@ -33,12 +95,6 @@
       )
     );
   }
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 // The profile icon of the mockup: 48 pixels, the size of the button itself

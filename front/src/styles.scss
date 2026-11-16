@@ -33,3 +33,15 @@ body {
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
 }
+
+// The side menu of the banner, a dialog that Material opens outside the banner: narrower than its
+// 280-pixel dialogs, and square against the edge of the screen
+.side-menu {
+  width: 16rem;
+  @include mat.dialog-overrides(
+    (
+      container-min-width: 0,
+      container-shape: 0,
+    )
+  );
+}
