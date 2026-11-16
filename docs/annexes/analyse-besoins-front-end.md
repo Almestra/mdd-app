@@ -79,7 +79,7 @@ Un bandeau dont le visuel change comme suit :
 | --- | --- | --- | --- |
 | Ordinateur | Public | Inscription et connexion | Logo sur la gauche. |
 | Ordinateur | Utilisateur connecté | Toutes sauf page d’accueil, inscription, connexion et pages légales | Logo sur la gauche ; « Se déconnecter », « Articles », « Thèmes » et l’icône du profil sur la droite. |
-| Mobile | Utilisateur connecté | Toutes sauf page d’accueil, inscription, connexion et pages légales | Logo sur la gauche et l’icône ☰ sur la droite, qui ouvre un panneau latéral avec « Se déconnecter », « Articles » et « Thèmes ». |
+| Mobile | Utilisateur connecté | Toutes sauf page d’accueil, inscription, connexion et pages légales | Logo sur la gauche et l’icône ☰ sur la droite, qui ouvre un panneau latéral avec « Se déconnecter », « Articles », « Thèmes » et l’icône du profil. |
 | Ordinateur et mobile | Tous | Pages légales | Logo sur la gauche. |
 
 ## Écarts avec les spécifications et les maquettes

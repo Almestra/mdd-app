@@ -26,7 +26,7 @@ Avant de l’ouvrir à un large public, ORION souhaite le tester avec un MVP (Mi
 | Article | Ajouter et consulter un article | ✅ Terminé |
 | Commentaire | Commenter un article | ✅ Terminé |
 | Pages légales | Consulter les mentions légales et la politique de confidentialité | ✅ Terminé |
-| Responsive | Utiliser l’application sur mobile comme sur ordinateur | ⏳ À venir |
+| Responsive | Utiliser l’application sur mobile comme sur ordinateur | ✅ Terminé |
 
 ## 2. Architecture et conception technique
 
