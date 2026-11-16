@@ -66,8 +66,8 @@ Cette annexe a pour but de relier chaque écran des maquettes aux fonctionnalit�
 
 - **Accès** : public, depuis le pied de page.
 - **Fonctionnalités** : Pages légales.
-- **Contenu** : les mentions légales (éditeur, hébergeur, contact) et la politique de confidentialité (données collectées, finalités, durée de conservation, droits des utilisateurs et contact).
-- **Règles** : accessibles depuis toutes les pages, connecté ou non.
+- **Contenu** : bandeau, flèche de retour, titre, puis le texte des mentions légales (éditeur, hébergeur, contact) ou de la politique de confidentialité (données collectées, finalités, durée de conservation, cookies, droits des utilisateurs et contact).
+- **Règles** : accessibles depuis toutes les pages, connecté ou non ; la flèche de retour mène à la page d’accueil, ou au fil d’actualité pour un utilisateur connecté.
 
 ## Éléments communs
 
@@ -78,8 +78,9 @@ Un bandeau dont le visuel change comme suit :
 | Support | Accès | Pages | Contenu |
 | --- | --- | --- | --- |
 | Ordinateur | Public | Inscription et connexion | Logo sur la gauche. |
-| Ordinateur | Utilisateur connecté | Toutes sauf page d’accueil, inscription et connexion | Logo sur la gauche ; « Se déconnecter », « Articles », « Thèmes » et l’icône du profil sur la droite. |
-| Mobile | Utilisateur connecté | Toutes sauf page d’accueil, inscription et connexion | Logo sur la gauche et l’icône ☰ sur la droite, qui ouvre un panneau latéral avec « Se déconnecter », « Articles » et « Thèmes ». |
+| Ordinateur | Utilisateur connecté | Toutes sauf page d’accueil, inscription, connexion et pages légales | Logo sur la gauche ; « Se déconnecter », « Articles », « Thèmes » et l’icône du profil sur la droite. |
+| Mobile | Utilisateur connecté | Toutes sauf page d’accueil, inscription, connexion et pages légales | Logo sur la gauche et l’icône ☰ sur la droite, qui ouvre un panneau latéral avec « Se déconnecter », « Articles » et « Thèmes ». |
+| Ordinateur et mobile | Tous | Pages légales | Logo sur la gauche. |
 
 ## Écarts avec les spécifications et les maquettes
 

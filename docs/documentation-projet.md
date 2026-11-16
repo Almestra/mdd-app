@@ -25,7 +25,7 @@ Avant de l’ouvrir à un large public, ORION souhaite le tester avec un MVP (Mi
 | Fil d’actualité | Consulter et trier son fil d’actualité | ✅ Terminé |
 | Article | Ajouter et consulter un article | ✅ Terminé |
 | Commentaire | Commenter un article | ✅ Terminé |
-| Pages légales | Consulter les mentions légales et la politique de confidentialité | ⏳ À venir |
+| Pages légales | Consulter les mentions légales et la politique de confidentialité | ✅ Terminé |
 | Responsive | Utiliser l’application sur mobile comme sur ordinateur | ⏳ À venir |
 
 ## 2. Architecture et conception technique
@@ -49,7 +49,7 @@ flowchart LR
 #### Organisation du code
 
 - **Dépôt** : un seul dépôt, trois dossiers `back/`, `front/` et `docs/`.
-- **Front** : généré avec Angular CLI ; `core` (session, intercepteurs, protection des routes, bandeau, pied de page), `shared` (code réutilisé par plusieurs fonctionnalités) et `features` (`home`, `auth`, `profile`, `topics`, `feed`, `posts`, `legal`).
+- **Front** : généré avec Angular CLI ; `core` (session, protection des routes, bandeau, pied de page), `shared` (code réutilisé par plusieurs fonctionnalités) et `features` (`home`, `auth`, `profile`, `topics`, `feed`, `posts`, `comments`, `legal`).
 - **Back** : en couches (contrôleur → service → repository), rangé par fonctionnalité : `auth`, `user`, `topic` (thèmes et abonnements), `post` (articles et fil), `comment`, plus un dossier commun pour la sécurité, la validation et la gestion des erreurs.
 
 #### Conventions internes
@@ -289,6 +289,7 @@ Une intégration continue ([GitHub Actions](https://docs.github.com/actions)) re
 
 - **Mot de passe pour les changements sensibles** : changer d’adresse e-mail ou supprimer son compte ne redemande pas le mot de passe actuel, alors que l’[OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) le recommande au moins pour l’e-mail. Une session restée ouverte suffit donc pour supprimer le compte, ou pour remplacer l’e-mail et bloquer ainsi l’accès de son titulaire, qui se connecte avec cette adresse.
 - **Confirmation de la nouvelle adresse e-mail** : une nouvelle adresse devrait être confirmée par un lien qui lui est envoyé, avant de remplacer l’ancienne. Cela demande un service d’envoi d’e-mails, que le MVP n’utilise pas.
+- **Mentions légales complètes** : les mentions légales renvoient à plus tard le siège social d’ORION, son numéro d’immatriculation et le nom du directeur de la publication, que la loi pour la confiance dans l’économie numérique (LCEN) impose avant une ouverture au public.
 
 <!-- Synthèse critique du code : points forts (structure, modularité, lisibilité), points à améliorer (complexité, dette technique, sécurité), actions correctives appliquées. -->
 
