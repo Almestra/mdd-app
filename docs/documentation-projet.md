@@ -2,7 +2,7 @@
 
 - **Auteur** : Lisa Bergeron
 - **Version** : 0.1.0
-- **Date** : 12/11/2026
+- **Date** : 16/11/2026
 
 ## 1. Présentation générale du projet
 
@@ -24,7 +24,7 @@ Avant de l’ouvrir à un large public, ORION souhaite le tester avec un MVP (Mi
 | Abonnement | S’abonner à un thème et s’en désabonner | ✅ Terminé |
 | Fil d’actualité | Consulter et trier son fil d’actualité | ✅ Terminé |
 | Article | Ajouter et consulter un article | ✅ Terminé |
-| Commentaire | Commenter un article | ⏳ À venir |
+| Commentaire | Commenter un article | ✅ Terminé |
 | Pages légales | Consulter les mentions légales et la politique de confidentialité | ⏳ À venir |
 | Responsive | Utiliser l’application sur mobile comme sur ordinateur | ⏳ À venir |
 
@@ -202,7 +202,8 @@ L’API REST, servie sous `/api`, échange du JSON. L’inscription et la connex
 - **`DELETE /api/topics/{id}/subscription`** : désabonne l’utilisateur du thème → 204.
 - **`GET /api/feed`** : renvoie le fil d’actualité, du plus récent au plus ancien, ou l’inverse avec `?direction=asc` → 200.
 - **`POST /api/posts`** (`topicId`, `title`, `content`) : crée un article dans un thème que suit l’utilisateur → 201, article.
-- **`GET /api/posts/{id}`** : renvoie un article et ses commentaires → 200.
+- **`GET /api/posts/{id}`** : renvoie un article → 200.
+- **`GET /api/posts/{id}/comments`** : renvoie les commentaires de l’article, du plus ancien au plus récent → 200.
 - **`POST /api/posts/{id}/comments`** (`content`) : commente l’article → 201, commentaire.
 
 Exemple de connexion :

@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { form, FormField, FormRoot, maxLength, required } from '@angular/forms/signals';
+import { apply, form, FormField, FormRoot } from '@angular/forms/signals';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -9,6 +9,11 @@ import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { BackLink } from '../../../shared/back-link/back-link.component';
+import {
+  postContentRules,
+  postTitleRules,
+  requiredTopicRules,
+} from '../../../shared/forms/content-rules.schema';
 import { submissionErrors } from '../../../shared/forms/server-errors.util';
 import { TopicsApi } from '../../topics/topics-api.service';
 import { PostRequest } from '../post-request.model';
@@ -53,11 +58,9 @@ export class PostCreate {
   protected readonly postForm = form(
     this.draft,
     (path) => {
-      required(path.topicId, { message: 'Le thème est obligatoire.' });
-      required(path.title, { message: 'Le titre est obligatoire.' });
-      maxLength(path.title, 100, { message: '100 caractères au plus.' });
-      required(path.content, { message: 'Le contenu est obligatoire.' });
-      maxLength(path.content, 10_000, { message: '10 000 caractères au plus.' });
+      apply(path.topicId, requiredTopicRules);
+      apply(path.title, postTitleRules);
+      apply(path.content, postContentRules);
     },
     {
       submission: {

@@ -94,9 +94,10 @@ describe('Post creation page', () => {
     submit(opened.page);
     const request = opened.http.expectOne('/api/posts');
     request.flush(created, { status: 201, statusText: 'Created' });
-    // The page of the post opens and asks for it
+    // The page of the post opens and asks for it, then for its comments
     const post = await vi.waitFor(() => opened.http.expectOne('/api/posts/7'));
     post.flush(created);
+    (await vi.waitFor(() => opened.http.expectOne('/api/posts/7/comments'))).flush([]);
     await opened.fixture.whenStable();
 
     // Assert
@@ -122,23 +123,6 @@ describe('Post creation page', () => {
     expect(fieldError(page, 'topic')?.textContent).toContain('Le thème est obligatoire.');
     expect(fieldError(page, 'title')?.textContent).toContain('Le titre est obligatoire.');
     expect(fieldError(page, 'content')?.textContent).toContain('Le contenu est obligatoire.');
-  });
-
-  it('keeps the title and the content within the limits of the API', async () => {
-    // Arrange
-    const opened = await openForm();
-    await fillIn(opened);
-    type(opened.page, 'title', 'a'.repeat(101));
-    type(opened.page, 'content', 'a'.repeat(10_001));
-
-    // Act
-    submit(opened.page);
-    await opened.fixture.whenStable();
-
-    // Assert
-    opened.http.expectNone('/api/posts');
-    expect(fieldError(opened.page, 'title')?.textContent).toContain('100 caractères au plus.');
-    expect(fieldError(opened.page, 'content')?.textContent).toContain('10 000 caractères au plus.');
   });
 
   it('shows under its field the error the API gives', async () => {

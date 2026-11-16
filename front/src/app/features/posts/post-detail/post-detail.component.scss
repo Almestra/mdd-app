@@ -72,3 +72,10 @@ $measure: 760px;
 .content {
   white-space: pre-line;
 }
+
+// The Comments section, under the post and lined up with its text
+.comments {
+  @media (min-width: 600px) {
+    margin-left: $arrow-size + $arrow-gap;
+  }
+}

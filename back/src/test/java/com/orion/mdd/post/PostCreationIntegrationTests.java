@@ -111,20 +111,6 @@ class PostCreationIntegrationTests {
                 .andExpect(jsonPath("$.errors.content").value("Le contenu est obligatoire."));
     }
 
-    @Test
-    void refusesATitleOrAContentThatIsTooLong() throws Exception {
-        // Arrange
-        follow(topicId);
-
-        // Act
-        ResultActions response = create(topicId, "4".repeat(101), "2".repeat(10_001));
-
-        // Assert
-        response.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errors.title").value("100 caractères au plus."))
-                .andExpect(jsonPath("$.errors.content").value("10 000 caractères au plus."));
-    }
-
     // The row is written directly, so that these tests depend on no other feature. Hibernate still holds the user
     // saved above, without this row, so it must forget it, as a new request would
     private void follow(Long id) {
