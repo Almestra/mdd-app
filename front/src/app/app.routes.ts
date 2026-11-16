@@ -30,6 +30,14 @@ export const routes: Routes = [
       import('./features/legal/legal-notice/legal-notice.component').then((m) => m.LegalNotice),
   },
   {
+    path: 'privacy-policy',
+    title: 'Politique de confidentialité – MDD',
+    loadComponent: () =>
+      import('./features/legal/privacy-policy/privacy-policy.component').then(
+        (m) => m.PrivacyPolicy,
+      ),
+  },
+  {
     path: '',
     canActivate: [loggedInGuard],
     loadComponent: () =>
