@@ -1,0 +1,22 @@
+// The links side by side and centered, under a light line that sets the footer apart from the page
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 2rem;
+  padding: 1rem;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  font: var(--mat-sys-body-medium);
+}
+
+// Grey, then violet on hover, on keyboard focus and on their page, like the links of the banner
+a {
+  color: var(--mat-sys-on-surface-variant);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible,
+  &.active {
+    color: var(--mat-sys-primary);
+  }
+}

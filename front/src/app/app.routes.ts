@@ -24,6 +24,20 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then((m) => m.Register),
   },
   {
+    path: 'legal-notice',
+    title: 'Mentions légales – MDD',
+    loadComponent: () =>
+      import('./features/legal/legal-notice/legal-notice.component').then((m) => m.LegalNotice),
+  },
+  {
+    path: 'privacy-policy',
+    title: 'Politique de confidentialité – MDD',
+    loadComponent: () =>
+      import('./features/legal/privacy-policy/privacy-policy.component').then(
+        (m) => m.PrivacyPolicy,
+      ),
+  },
+  {
     path: '',
     canActivate: [loggedInGuard],
     loadComponent: () =>

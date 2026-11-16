@@ -1,19 +1,15 @@
+@use 'banner';
+
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  // The height of the screen, less the footer
+  min-height: 100%;
 }
 
+// No banner on a small screen, where the page shows a larger logo above the form instead
 .banner {
   display: none;
-  padding: 0.75rem 2.5rem;
-  border-bottom: 1px solid var(--mat-sys-on-surface);
-
-  img {
-    display: block;
-    width: 140px;
-    height: auto;
-  }
 
   @media (min-width: 600px) {
     display: block;
