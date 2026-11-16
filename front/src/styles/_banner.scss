@@ -1,0 +1,15 @@
+// The banner at the top of the pages: the logo on the left, and a line under it
+.banner {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--mat-sys-on-surface);
+
+  img {
+    display: block;
+    width: 140px;
+    height: auto;
+  }
+
+  @media (min-width: 600px) {
+    padding: 0.75rem 2.5rem;
+  }
+}
