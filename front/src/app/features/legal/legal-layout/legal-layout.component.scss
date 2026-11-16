@@ -1,0 +1,48 @@
+@use 'banner';
+
+// The icon button of Material, and the space between it and the title, as on the page of a post
+$arrow-size: 40px;
+$arrow-gap: 8px;
+// About 75 characters per line at 16px, the most for comfortable reading
+$measure: 640px;
+
+// One column, centered on the page
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: $arrow-size + $arrow-gap + $measure;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+
+  @media (min-width: 600px) {
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+// The back arrow on the left of the title, centered on its first line, as on the page of a post
+.heading {
+  display: flex;
+  align-items: flex-start;
+  gap: $arrow-gap;
+}
+
+.back {
+  flex: none;
+  margin-block: -4px;
+}
+
+h1 {
+  margin: 0;
+  font: var(--mat-sys-headline-small);
+  font-weight: 700;
+}
+
+// On a larger screen, the text lines up with the title
+.text {
+  font: var(--mat-sys-body-large);
+
+  @media (min-width: 600px) {
+    margin-left: $arrow-size + $arrow-gap;
+  }
+}
