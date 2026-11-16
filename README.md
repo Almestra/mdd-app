@@ -20,6 +20,8 @@ Start the API on `http://localhost:8080`. This also starts MySQL and applies the
 ./mvnw spring-boot:run
 ```
 
+MySQL listens on `localhost:3307`, for database tools.
+
 On Windows, use `./mvnw.cmd` instead of `./mvnw`.
 
 Other commands:
