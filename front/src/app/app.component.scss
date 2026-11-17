@@ -7,3 +7,9 @@
   grid-template-columns: minmax(0, 1fr);
   min-height: 100dvh;
 }
+
+// The footer takes the last row from the start: drawn before the page arrives, it would otherwise
+// sit in the page's row at the top of the screen, then jump down
+app-footer {
+  grid-row: 3;
+}
