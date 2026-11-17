@@ -12,7 +12,8 @@
     "format": "prettier --write \"src/**/*.{ts,html,scss}\" \"cypress/**/*.ts\" cypress.config.ts",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss}\" \"cypress/**/*.ts\" cypress.config.ts",
     "e2e": "ng e2e",
-    "e2e:ci": "ng run mdd-front:cypress-run"
+    "e2e:ci": "ng run mdd-front:cypress-run",
+    "preview": "ng build && vite preview --config preview.config.mjs"
   },
   "private": true,
   "packageManager": "npm@11.20.0",
@@ -44,6 +45,7 @@
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
     "typescript-eslint": "8.71.0",
+    "vite": "^8.3.5",
     "vitest": "^5.0.0"
   },
   "allowScripts": {

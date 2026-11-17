@@ -39,7 +39,7 @@ jobs:
           cache: npm
           cache-dependency-path: front/package-lock.json
       # Cypress runs by hand: its tests need the real API, so its browser is not downloaded here
-      - run: npm ci
+      - run: npm ci --ignore-scripts
         env:
           CYPRESS_INSTALL_BINARY: 0
       - run: npm run format:check

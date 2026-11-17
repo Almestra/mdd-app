@@ -20,6 +20,8 @@ Start the API on `http://localhost:8080`. This also starts MySQL and applies the
 ./mvnw spring-boot:run
 ```
 
+MySQL listens on `localhost:3307`, for database tools.
+
 On Windows, use `./mvnw.cmd` instead of `./mvnw`.
 
 Other commands:
@@ -43,3 +45,4 @@ Other commands:
 - `npm run e2e:ci`: runs the Cypress tests in a headless browser, on its own server on port 4201. Start the API with `./mvnw spring-boot:test-run` first.
 - `npm run lint`: checks the code with ESLint.
 - `npm run format`: formats the code with Prettier.
+- `npm run preview`: builds the application for production and serves it on `http://localhost:4300`, for the Lighthouse audits. Start the API first.
