@@ -20,7 +20,7 @@ Start the API on `http://localhost:8080`. This also starts MySQL and applies the
 ./mvnw spring-boot:run
 ```
 
-MySQL listens on `localhost:3307`, for database tools.
+MySQL listens on `localhost:3307`, for database tools. The API documentation (Swagger UI) is on `http://localhost:8080/swagger-ui.html`, as long as `SWAGGER_ENABLED` is `true` in `.env`, as in `.env.example`.
 
 On Windows, use `./mvnw.cmd` instead of `./mvnw`.
 
