@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$violet-palette,
+      ),
+      typography: 'Inter Variable',
+      density: 0,
+    )
+  );
+  @include mat.theme-overrides(
+    (
+      primary: #7550ec,
+      label-large-weight: 600,
+      surface: white,
+    )
+  );
+  @include mat.strong-focus-indicators(
+    (
+      border-color: var(--mat-sys-primary),
+    )
+  );
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+}
+
+// The side menu of the banner, a dialog that Material opens outside the banner: narrower than its
+// 280-pixel dialogs, and square against the edge of the screen
+.side-menu {
+  width: 16rem;
+  @include mat.dialog-overrides(
+    (
+      container-min-width: 0,
+      container-shape: 0,
+    )
+  );
+}

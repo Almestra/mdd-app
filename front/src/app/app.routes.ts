@@ -1,0 +1,77 @@
+import { Routes } from '@angular/router';
+
+import { loggedInGuard } from './core/session/logged-in.guard';
+import { loggedOutGuard } from './core/session/logged-out.guard';
+
+export const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    canActivate: [loggedOutGuard],
+    loadComponent: () => import('./features/home/home.component').then((m) => m.Home),
+  },
+  {
+    path: 'login',
+    title: 'Connexion – MDD',
+    canActivate: [loggedOutGuard],
+    loadComponent: () => import('./features/auth/login/login.component').then((m) => m.Login),
+  },
+  {
+    path: 'register',
+    title: 'Inscription – MDD',
+    canActivate: [loggedOutGuard],
+    loadComponent: () =>
+      import('./features/auth/register/register.component').then((m) => m.Register),
+  },
+  {
+    path: 'legal-notice',
+    title: 'Mentions légales – MDD',
+    loadComponent: () =>
+      import('./features/legal/legal-notice/legal-notice.component').then((m) => m.LegalNotice),
+  },
+  {
+    path: 'privacy-policy',
+    title: 'Politique de confidentialité – MDD',
+    loadComponent: () =>
+      import('./features/legal/privacy-policy/privacy-policy.component').then(
+        (m) => m.PrivacyPolicy,
+      ),
+  },
+  {
+    path: '',
+    canActivate: [loggedInGuard],
+    loadComponent: () =>
+      import('./core/layout/main-layout/main-layout.component').then((m) => m.MainLayout),
+    children: [
+      {
+        path: 'feed',
+        title: 'Fil d’actualité – MDD',
+        loadComponent: () => import('./features/feed/feed.component').then((m) => m.Feed),
+      },
+      {
+        // Before posts/:id, which would take « new » for the id of a post
+        path: 'posts/new',
+        title: 'Créer un article – MDD',
+        loadComponent: () =>
+          import('./features/posts/post-create/post-create.component').then((m) => m.PostCreate),
+      },
+      {
+        // The page shows the title of the post in the tab once it has loaded
+        path: 'posts/:id',
+        title: 'Article – MDD',
+        loadComponent: () =>
+          import('./features/posts/post-detail/post-detail.component').then((m) => m.PostDetail),
+      },
+      {
+        path: 'topics',
+        title: 'Thèmes – MDD',
+        loadComponent: () => import('./features/topics/topics.component').then((m) => m.Topics),
+      },
+      {
+        path: 'profile',
+        title: 'Profil – MDD',
+        loadComponent: () => import('./features/profile/profile.component').then((m) => m.Profile),
+      },
+    ],
+  },
+];

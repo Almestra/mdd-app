@@ -1,0 +1,15 @@
+// The footer stays at the bottom of the screen when the page is short. The router puts the page
+// right after its outlet, so the rows hold the outlet, which shows nothing, the page and the footer.
+// The single column keeps the width of the screen, even when a page asks for more
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+// The footer takes the last row from the start: drawn before the page arrives, it would otherwise
+// sit in the page's row at the top of the screen, then jump down
+app-footer {
+  grid-row: 3;
+}

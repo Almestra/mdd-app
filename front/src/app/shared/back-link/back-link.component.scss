@@ -1,0 +1,10 @@
+// As big as its button, so that the page places it like the button itself
+:host {
+  display: inline-flex;
+}
+
+svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}

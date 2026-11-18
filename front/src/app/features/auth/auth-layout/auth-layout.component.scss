@@ -1,0 +1,68 @@
+@use 'banner';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  // The height of the screen, less the footer
+  min-height: 100%;
+}
+
+// No banner on a small screen, where the page shows a larger logo above the form instead
+.banner {
+  display: none;
+
+  @media (min-width: 600px) {
+    display: block;
+  }
+}
+
+.page {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1rem;
+
+  @media (min-width: 600px) {
+    padding: 1.5rem 2rem;
+  }
+}
+
+.back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+
+  @media (min-width: 600px) {
+    top: 1.5rem;
+    left: 2rem;
+  }
+}
+
+.logo {
+  display: block;
+  width: min(225px, 60vw);
+  height: auto;
+  margin: auto auto 0;
+
+  @media (min-width: 600px) {
+    display: none;
+  }
+}
+
+.content {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto auto;
+
+  @media (min-width: 600px) {
+    margin: auto;
+  }
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font: var(--mat-sys-headline-small);
+  font-weight: 700;
+}

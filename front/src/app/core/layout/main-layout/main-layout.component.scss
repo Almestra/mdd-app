@@ -1,0 +1,140 @@
+@use '@angular/material' as mat;
+@use 'banner';
+@use 'danger-button';
+
+// The width from which the banner has room for its links: they need 645 pixels, 660 with a
+// scrollbar. Below it, a menu button opens them in a side panel
+$wide: 768px;
+
+// The logo on the left, the links or the menu button on the right
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.links {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+
+  @media (min-width: $wide) {
+    display: flex;
+  }
+}
+
+// The menu icon: 32 pixels in a button as big as the profile icon. Black, then violet on hover and
+// on keyboard focus, like the other controls of the banner
+.menu {
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-on-surface),
+      icon-size: 32px,
+      state-layer-size: 48px,
+      state-layer-color: var(--mat-sys-primary),
+      ripple-color: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent),
+    )
+  );
+
+  &:hover,
+  &:focus-visible {
+    @include mat.icon-button-overrides(
+      (
+        icon-color: var(--mat-sys-primary),
+      )
+    );
+  }
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+
+  @media (min-width: $wide) {
+    display: none;
+  }
+}
+
+// The side menu: the links one under the other, against the right edge, and the profile icon at
+// the bottom
+.side-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 2rem 1.5rem;
+
+  .profile {
+    margin-top: auto;
+  }
+}
+
+.logout {
+  @include danger-button.text;
+}
+
+// Articles and Topics: black, then violet on hover, on keyboard focus and on their page, like the
+// profile icon
+.link {
+  @include mat.button-overrides(
+    (
+      text-label-text-color: var(--mat-sys-on-surface),
+      text-label-text-size: 20px,
+      text-label-text-weight: 400,
+    )
+  );
+
+  &:hover,
+  &:focus-visible,
+  &.active {
+    @include mat.button-overrides(
+      (
+        text-label-text-color: var(--mat-sys-primary),
+      )
+    );
+  }
+}
+
+// The profile icon of the mockup: 48 pixels, the size of the button itself
+.profile {
+  // Hover and press tint the disk in violet, like the buttons of the home page
+  @include mat.icon-button-overrides(
+    (
+      icon-size: 48px,
+      state-layer-size: 48px,
+      state-layer-color: var(--mat-sys-primary),
+      ripple-color: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent),
+    )
+  );
+
+  svg {
+    display: block;
+  }
+
+  // Its border has the colour of the disk, and turns violet on hover, on keyboard focus and on the
+  // profile page
+  .disk {
+    fill: #d9d9d9;
+    stroke: #d9d9d9;
+    stroke-width: 3;
+  }
+
+  .person {
+    fill: none;
+    stroke: rgb(0 0 0 / 50%);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:hover,
+  &:focus-visible,
+  &.active {
+    .disk,
+    .person {
+      stroke: var(--mat-sys-primary);
+    }
+  }
+}
