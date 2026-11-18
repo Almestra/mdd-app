@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.orion</groupId>
     <artifactId>mdd-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>mdd-api</name>
     <description>REST API of the MDD developer social network</description>
     <url/>
